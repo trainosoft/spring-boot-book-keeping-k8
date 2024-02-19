@@ -5,6 +5,7 @@ import com.sivalabs.bookmarker.domain.BookmarkService;
 import com.sivalabs.bookmarker.domain.BookmarksDTO;
 import com.sivalabs.bookmarker.domain.CreateBookmarkRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,12 +20,14 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/bookmarks")
 @RequiredArgsConstructor
+@Slf4j
 public class BookmarkController {
     private final BookmarkService bookmarkService;
 
     @GetMapping
     public BookmarksDTO getBookmarks(@RequestParam(name = "page", defaultValue = "1") Integer page,
                                      @RequestParam(name = "query", defaultValue = "") String query) {
+        log.info("Getting book marks");
         if(query == null || query.trim().length() == 0) {
             return bookmarkService.getBookmarks(page);
         }
